@@ -4,22 +4,38 @@ AF_DCMotor motor(2, MOTOR12_64KHZ); // create motor #2, 64KHz pwm
 
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
-  Serial.println("Motor test!");
+  Serial.println("C-Eng C!");
   
-  motor.setSpeed(200);     // set the speed to 200/255
+  motor.setSpeed(100);     // set the speed to 200/255
 }
 
 void loop() {
-  Serial.print("tick");
-  
-  motor.run(FORWARD);      // turn it on going forward
-  delay(1000);
+  // Wait a bit for the thing to be in place
+  delay(5000);
+  Serial.println("Lift the bin!");
+  motor.run(FORWARD);
+  // Wait until its at the top
+  delay(3000);
 
-  Serial.print("tock");
-  motor.run(BACKWARD);     // the other way
-  delay(1000);
+  // Wait at the top 
+  Serial.println("At top, stop.");
+  motor.run(RELEASE);
+  // Wait for a few seconds for things to fall. 
+  delay(3000);
+
+  // Go back down.
+  Serial.println("Going down.");
+  motor.run(BACKWARD);
+  delay(3000);
+
+  // Stop motor.
+  Serial.println("Stop Motor.");
+  motor.run(RELEASE);
+
+  // Now we do the wheel.
+
   
-  Serial.print("tack");
-  motor.run(RELEASE);      // stopped
-  delay(1000);
+
+  
+  
 }
